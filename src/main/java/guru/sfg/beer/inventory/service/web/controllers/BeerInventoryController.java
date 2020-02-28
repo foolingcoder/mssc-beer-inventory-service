@@ -1,10 +1,12 @@
 package guru.sfg.beer.inventory.service.web.controllers;
 
 import guru.sfg.beer.inventory.service.repositories.BeerInventoryRepository;
-import guru.sfg.beer.inventory.service.web.mappers.BeerInventoryMapper;
+import guru.sfg.beer.inventory.service.web.mappers.BeerInventoryMappers;
 import guru.sfg.beer.inventory.service.web.model.BeerInventoryDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +24,8 @@ import java.util.stream.Collectors;
 public class BeerInventoryController {
 
     private final BeerInventoryRepository beerInventoryRepository;
-    private final BeerInventoryMapper beerInventoryMapper;
+
+    private final BeerInventoryMappers beerInventoryMappers;
 
     @GetMapping("api/v1/beer/{beerId}/inventory")
     List<BeerInventoryDto> listBeersById(@PathVariable UUID beerId){
@@ -30,7 +33,7 @@ public class BeerInventoryController {
 
         return beerInventoryRepository.findAllByBeerId(beerId)
                 .stream()
-                .map(beerInventoryMapper::beerInventoryToBeerInventoryDto)
+                .map(beerInventoryMappers::beerInventoryToBeerInventoryDto)
                 .collect(Collectors.toList());
     }
 }
