@@ -1,39 +1,35 @@
 package guru.sfg.beer.inventory.service.web.controllers;
 
-import guru.sfg.beer.inventory.service.repositories.BeerInventoryRepository;
-import guru.sfg.beer.inventory.service.web.mappers.BeerInventoryMappers;
-import guru.sfg.beer.inventory.service.web.model.BeerInventoryDto;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import guru.sfg.beer.inventory.service.repositories.BeerInventoryRepository;
+import guru.sfg.beer.inventory.service.web.mappers.BeerInventoryMappers;
+import guru.sfg.beer.inventory.service.web.model.BeerInventoryDto;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by jt on 2019-05-31.
  */
 @Slf4j
-@RequiredArgsConstructor
 @RestController
+@NoArgsConstructor
 public class BeerInventoryController {
 
-    private final BeerInventoryRepository beerInventoryRepository;
+	private BeerInventoryRepository beerInventoryRepository;
+	private BeerInventoryMappers beerInventoryMappers;
 
-    private final BeerInventoryMappers beerInventoryMappers;
+	@GetMapping("api/v1/beer/{beerId}/inventory")
+	List<BeerInventoryDto> listBeersById(@PathVariable UUID beerId) {
+		log.debug("Finding Inventory for beerId:" + beerId);
 
-    @GetMapping("api/v1/beer/{beerId}/inventory")
-    List<BeerInventoryDto> listBeersById(@PathVariable UUID beerId){
-        log.debug("Finding Inventory for beerId:" + beerId);
-
-        return beerInventoryRepository.findAllByBeerId(beerId)
-                .stream()
-                .map(beerInventoryMappers::beerInventoryToBeerInventoryDto)
-                .collect(Collectors.toList());
-    }
+		return beerInventoryRepository.findAllByBeerId(beerId).stream()
+				.map(beerInventoryMappers::beerInventoryToBeerInventoryDto).collect(Collectors.toList());
+	}
 }
