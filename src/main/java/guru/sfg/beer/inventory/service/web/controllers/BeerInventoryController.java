@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 public class BeerInventoryController {
 
+	@Autowired
 	private BeerInventoryRepository beerInventoryRepository;
+	
+	@Autowired
 	private BeerInventoryMappers beerInventoryMappers;
 
 	@GetMapping("api/v1/beer/{beerId}/inventory")
