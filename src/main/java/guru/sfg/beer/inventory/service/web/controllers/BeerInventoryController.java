@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import guru.sfg.beer.inventory.service.repositories.BeerInventoryRepository;
 import guru.sfg.beer.inventory.service.web.mappers.BeerInventoryMappers;
-import guru.sfg.beer.inventory.service.web.model.BeerInventoryDto;
+import guru.sfg.brewery.model.BeerInventoryDto;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
