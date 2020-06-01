@@ -15,9 +15,53 @@
 	<name>mssc-beer-inventory-service</name>
 	<description>MSSC Beer Inventory Service</description>
 
-	<dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.33.0</version>
 
-	</dependencies>
+				<configuration>
 
+
+					<verbose>true</verbose>
+
+					<!-- Needed if pushing to DockerHub: preferred to store these in local 
+						environment (see the course) -->
+					<authConfig>
+						<username>priteela</username>
+						<password>password123</password>
+					</authConfig>
+
+					<images>
+						<image>
+							<name>priteela/inventory-service</name>
+							<build>
+								<dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>
+
+								<!--copies Jar to the maven directory (uses Assembly system) -->
+								<assembly>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+								<tags>
+									<tag>latest</tag>
+								</tags>
+							</build>
+						</image>
+					</images>
+				</configuration>
+				
+				<executions>
+					<execution>
+					    <phase>package</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

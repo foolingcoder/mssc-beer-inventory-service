@@ -10,6 +10,9 @@ Profiles:
 To run with local mysql config and no service discovery
 -Dspring.profiles.active=localmysql
 
+To run with docker mysql config and no service discovery
+-Dspring.profiles.active=docker-config
+
 To run with local mysql config and service discovery
 -Dspring.profiles.active=localmysql,local-discovery
 
