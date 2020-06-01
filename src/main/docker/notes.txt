@@ -1,0 +1,15 @@
+docker container run --name inventory-service-db -e MYSQL_ROOT_PASSWORD=root  -e MYSQL_DATABASE=beerinventoryservice   -e MYSQL_USER=beer_inventory_service   -e MYSQL_PASSWORD=password -p 3308:3306 -v c:/storage/docker/mysql/inventory-service-db --network mssc-beer-service_sfg-brewery-network mysql:8.0
+
+docker container run --name inventory-service -p 8082:8082 --network mssc-beer-service_sfg-brewery-network priteela/inventory-service
+
+
+docker container run -it --network mssc-beer-service_sfg-brewery-network debian:buster-slim
+apt-get update
+apt-get install iputils-ping
+apt-get install default-mysql-client
+
+
+
+mysql -u root -h inventory-service-db -p inventoryservice
+
+alter user 'root' identified with mysql_native_password by 'root'
